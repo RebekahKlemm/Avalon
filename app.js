@@ -8,7 +8,8 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -32,6 +33,16 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500).send(err);
 });
 
+//Whenever someone connects this gets executed
+io.on('connection', function(socket){
+    console.log('A user connected');
+
+    //Whenever someone disconnects this piece of code executed
+    socket.on('disconnect', function () {
+        console.log('A user disconnected');
+    });
+});
+
 
 //Synch the database
 // db.sync()
@@ -39,7 +50,7 @@ app.use(function (err, req, res, next) {
 // Reset the database:
 db.sync({force: true})
 
-app.listen(3001, function () {
+http.listen(3001, function () {
     console.log('Server is listening on port 3001');
 });
 
