@@ -1,3 +1,3 @@
-Klemm Bones is a skeleton of a basic react app that includes a Signup component and a Login component, along with basic Navbar.
+Avalon is a popular board game involving deception and deduction. This repo recreates that game, using web sockets, to allow multiple users in the same room to play without needing the card deck.
 
-Includes a backend that is ready to hook up to Postgres, and a User model.
+Note: This is a work in progress and not yet complete.
