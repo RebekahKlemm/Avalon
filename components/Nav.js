@@ -7,7 +7,7 @@ export default function Nav() {
             <nav className="navbar navbar-inverse blue">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="#">Animal Alerts</a>
+                        <a className="navbar-brand" href="#">Avalon</a>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

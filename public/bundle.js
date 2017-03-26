@@ -46,11 +46,6 @@
 
 	'use strict';
 	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
-	//import actions that are dispatched to store onEnter
-	
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -67,9 +62,9 @@
 	
 	var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
 	
-	var _SignupContainer = __webpack_require__(300);
+	var _Welcome = __webpack_require__(313);
 	
-	var _SignupContainer2 = _interopRequireDefault(_SignupContainer);
+	var _Welcome2 = _interopRequireDefault(_Welcome);
 	
 	var _reactRedux = __webpack_require__(236);
 	
@@ -81,33 +76,36 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _users = __webpack_require__(273);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var onAppEnter = function onAppEnter() {
-	    Promise.all([_axios2.default.get('/api/users')]).then(function (responses) {
-	        return responses.map(function (r) {
-	            return r.data;
-	        });
-	    }).then(function (_ref) {
-	        var _ref2 = _slicedToArray(_ref, 1),
-	            users = _ref2[0];
+	//import actions that are dispatched to store onEnter
+	// import {receiveUsers} from '../actions/users';
 	
-	        _store2.default.dispatch((0, _users.receiveUsers)(users));
-	    });
-	};
 	
+	// const onAppEnter = function () {
+	//     Promise.all([
+	//         axios.get('/api/users'),
+	//
+	//     ])
+	//         .then(responses => responses.map(r => r.data))
+	//         .then(([users]) => {
+	//             store.dispatch(receiveUsers(users));
+	//         })
+	//
+	// };
+	
+	
+	// import SignupContainer from './containers/SignupContainer';
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: _store2.default },
 	    _react2.default.createElement(
 	        _reactRouter.Router,
-	        { history: _reactRouter.hashHistory },
+	        { history: _reactRouter.browserHistory },
 	        _react2.default.createElement(
 	            _reactRouter.Route,
-	            { path: '/', component: _App.App, onEnter: onAppEnter },
-	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _SignupContainer2.default }),
+	            { path: '/', component: _App.App },
+	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Welcome2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default })
 	        )
 	    )
@@ -26595,7 +26593,7 @@
 /* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -26606,23 +26604,14 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Nav = __webpack_require__(234);
-	
-	var _Nav2 = _interopRequireDefault(_Nav);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var App = exports.App = function App(props) {
 	    return _react2.default.createElement(
-	        'div',
-	        { id: 'main', className: 'container-fluid' },
+	        "div",
+	        { id: "main", className: "container-fluid" },
 	        _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(_Nav2.default, null)
-	        ),
-	        _react2.default.createElement(
-	            'div',
+	            "div",
 	            null,
 	            props.children && _react2.default.cloneElement(props.children, props)
 	        )
@@ -26630,86 +26619,7 @@
 	};
 
 /***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = Nav;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(178);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Nav() {
-	    return _react2.default.createElement(
-	        'nav',
-	        { className: 'navbar navbar-inverse blue' },
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'container-fluid' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'navbar-header' },
-	                _react2.default.createElement(
-	                    'a',
-	                    { className: 'navbar-brand', href: '#' },
-	                    'Animal Alerts'
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-	                _react2.default.createElement(
-	                    'ul',
-	                    { className: 'nav navbar-nav' },
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { href: '#' },
-	                            'Signup ',
-	                            _react2.default.createElement(
-	                                'span',
-	                                { className: 'sr-only' },
-	                                '(current)'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#/login' },
-	                            'Login'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '/api/users/logout' },
-	                            'Logout'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement('ul', { className: 'nav navbar-nav navbar-right' })
-	            )
-	        )
-	    );
-	}
-
-/***/ },
+/* 234 */,
 /* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26832,7 +26742,7 @@
 	
 	var _Provider2 = _interopRequireDefault(_Provider);
 	
-	var _connectAdvanced = __webpack_require__(240);
+	var _connectAdvanced = __webpack_require__(241);
 	
 	var _connectAdvanced2 = _interopRequireDefault(_connectAdvanced);
 	
@@ -26857,9 +26767,9 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _PropTypes = __webpack_require__(238);
+	var _PropTypes = __webpack_require__(312);
 	
-	var _warning = __webpack_require__(239);
+	var _warning = __webpack_require__(240);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -26932,30 +26842,105 @@
 
 /***/ },
 /* 238 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 	
 	exports.__esModule = true;
-	exports.storeShape = exports.subscriptionShape = undefined;
 	
-	var _react = __webpack_require__(1);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var subscriptionShape = exports.subscriptionShape = _react.PropTypes.shape({
-	  trySubscribe: _react.PropTypes.func.isRequired,
-	  tryUnsubscribe: _react.PropTypes.func.isRequired,
-	  notifyNestedSubs: _react.PropTypes.func.isRequired,
-	  isSubscribed: _react.PropTypes.func.isRequired
-	});
+	// encapsulates the subscription logic for connecting a component to the redux store, as
+	// well as nesting subscriptions of descendant components, so that we can ensure the
+	// ancestor components re-render before descendants
 	
-	var storeShape = exports.storeShape = _react.PropTypes.shape({
-	  subscribe: _react.PropTypes.func.isRequired,
-	  dispatch: _react.PropTypes.func.isRequired,
-	  getState: _react.PropTypes.func.isRequired
-	});
+	var CLEARED = null;
+	var nullListeners = {
+	  notify: function notify() {}
+	};
+	
+	function createListenerCollection() {
+	  // the current/next pattern is copied from redux's createStore code.
+	  // TODO: refactor+expose that code to be reusable here?
+	  var current = [];
+	  var next = [];
+	
+	  return {
+	    clear: function clear() {
+	      next = CLEARED;
+	      current = CLEARED;
+	    },
+	    notify: function notify() {
+	      var listeners = current = next;
+	      for (var i = 0; i < listeners.length; i++) {
+	        listeners[i]();
+	      }
+	    },
+	    subscribe: function subscribe(listener) {
+	      var isSubscribed = true;
+	      if (next === current) next = current.slice();
+	      next.push(listener);
+	
+	      return function unsubscribe() {
+	        if (!isSubscribed || current === CLEARED) return;
+	        isSubscribed = false;
+	
+	        if (next === current) next = current.slice();
+	        next.splice(next.indexOf(listener), 1);
+	      };
+	    }
+	  };
+	}
+	
+	var Subscription = function () {
+	  function Subscription(store, parentSub, onStateChange) {
+	    _classCallCheck(this, Subscription);
+	
+	    this.store = store;
+	    this.parentSub = parentSub;
+	    this.onStateChange = onStateChange;
+	    this.unsubscribe = null;
+	    this.listeners = nullListeners;
+	  }
+	
+	  Subscription.prototype.addNestedSub = function addNestedSub(listener) {
+	    this.trySubscribe();
+	    return this.listeners.subscribe(listener);
+	  };
+	
+	  Subscription.prototype.notifyNestedSubs = function notifyNestedSubs() {
+	    this.listeners.notify();
+	  };
+	
+	  Subscription.prototype.isSubscribed = function isSubscribed() {
+	    return Boolean(this.unsubscribe);
+	  };
+	
+	  Subscription.prototype.trySubscribe = function trySubscribe() {
+	    if (!this.unsubscribe) {
+	      this.unsubscribe = this.parentSub ? this.parentSub.addNestedSub(this.onStateChange) : this.store.subscribe(this.onStateChange);
+	
+	      this.listeners = createListenerCollection();
+	    }
+	  };
+	
+	  Subscription.prototype.tryUnsubscribe = function tryUnsubscribe() {
+	    if (this.unsubscribe) {
+	      this.unsubscribe();
+	      this.unsubscribe = null;
+	      this.listeners.clear();
+	      this.listeners = nullListeners;
+	    }
+	  };
+	
+	  return Subscription;
+	}();
+	
+	exports.default = Subscription;
 
 /***/ },
-/* 239 */
+/* 239 */,
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26985,7 +26970,7 @@
 	}
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -27006,11 +26991,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _Subscription = __webpack_require__(241);
+	var _Subscription = __webpack_require__(238);
 	
 	var _Subscription2 = _interopRequireDefault(_Subscription);
 	
-	var _PropTypes = __webpack_require__(238);
+	var _PropTypes = __webpack_require__(312);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27280,104 +27265,6 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 241 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	// encapsulates the subscription logic for connecting a component to the redux store, as
-	// well as nesting subscriptions of descendant components, so that we can ensure the
-	// ancestor components re-render before descendants
-	
-	var CLEARED = null;
-	var nullListeners = {
-	  notify: function notify() {}
-	};
-	
-	function createListenerCollection() {
-	  // the current/next pattern is copied from redux's createStore code.
-	  // TODO: refactor+expose that code to be reusable here?
-	  var current = [];
-	  var next = [];
-	
-	  return {
-	    clear: function clear() {
-	      next = CLEARED;
-	      current = CLEARED;
-	    },
-	    notify: function notify() {
-	      var listeners = current = next;
-	      for (var i = 0; i < listeners.length; i++) {
-	        listeners[i]();
-	      }
-	    },
-	    subscribe: function subscribe(listener) {
-	      var isSubscribed = true;
-	      if (next === current) next = current.slice();
-	      next.push(listener);
-	
-	      return function unsubscribe() {
-	        if (!isSubscribed || current === CLEARED) return;
-	        isSubscribed = false;
-	
-	        if (next === current) next = current.slice();
-	        next.splice(next.indexOf(listener), 1);
-	      };
-	    }
-	  };
-	}
-	
-	var Subscription = function () {
-	  function Subscription(store, parentSub, onStateChange) {
-	    _classCallCheck(this, Subscription);
-	
-	    this.store = store;
-	    this.parentSub = parentSub;
-	    this.onStateChange = onStateChange;
-	    this.unsubscribe = null;
-	    this.listeners = nullListeners;
-	  }
-	
-	  Subscription.prototype.addNestedSub = function addNestedSub(listener) {
-	    this.trySubscribe();
-	    return this.listeners.subscribe(listener);
-	  };
-	
-	  Subscription.prototype.notifyNestedSubs = function notifyNestedSubs() {
-	    this.listeners.notify();
-	  };
-	
-	  Subscription.prototype.isSubscribed = function isSubscribed() {
-	    return Boolean(this.unsubscribe);
-	  };
-	
-	  Subscription.prototype.trySubscribe = function trySubscribe() {
-	    if (!this.unsubscribe) {
-	      this.unsubscribe = this.parentSub ? this.parentSub.addNestedSub(this.onStateChange) : this.store.subscribe(this.onStateChange);
-	
-	      this.listeners = createListenerCollection();
-	    }
-	  };
-	
-	  Subscription.prototype.tryUnsubscribe = function tryUnsubscribe() {
-	    if (this.unsubscribe) {
-	      this.unsubscribe();
-	      this.unsubscribe = null;
-	      this.listeners.clear();
-	      this.listeners = nullListeners;
-	    }
-	  };
-	
-	  return Subscription;
-	}();
-	
-	exports.default = Subscription;
-
-/***/ },
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -27389,7 +27276,7 @@
 	
 	exports.createConnect = createConnect;
 	
-	var _connectAdvanced = __webpack_require__(240);
+	var _connectAdvanced = __webpack_require__(241);
 	
 	var _connectAdvanced2 = _interopRequireDefault(_connectAdvanced);
 	
@@ -28711,7 +28598,7 @@
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _warning = __webpack_require__(239);
+	var _warning = __webpack_require__(240);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -28939,7 +28826,7 @@
 	exports.__esModule = true;
 	exports.default = verifySubselectors;
 	
-	var _warning = __webpack_require__(239);
+	var _warning = __webpack_require__(240);
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
@@ -30581,231 +30468,8 @@
 	var REFRESH_USERS = exports.REFRESH_USERS = 'REFRESH_USERS';
 
 /***/ },
-/* 300 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(236);
-	
-	var _Signup = __webpack_require__(301);
-	
-	var _Signup2 = _interopRequireDefault(_Signup);
-	
-	var _users = __webpack_require__(273);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SignupContainer = function (_Component) {
-	    _inherits(SignupContainer, _Component);
-	
-	    function SignupContainer(props) {
-	        _classCallCheck(this, SignupContainer);
-	
-	        var _this = _possibleConstructorReturn(this, (SignupContainer.__proto__ || Object.getPrototypeOf(SignupContainer)).call(this, props));
-	
-	        _this.state = {
-	            first: '',
-	            last: '',
-	            address: '',
-	            phone: '',
-	            password: ''
-	        };
-	
-	        _this.handleInputChange = _this.handleInputChange.bind(_this);
-	        _this.handleAddress = _this.handleAddress.bind(_this);
-	        _this.signUpUser = _this.signUpUser.bind(_this);
-	
-	        return _this;
-	    }
-	
-	    _createClass(SignupContainer, [{
-	        key: 'handleAddress',
-	        value: function handleAddress(e) {
-	            //Ugh, I could not figure out how to validate the address and alert the user if they enter an invalid address!!
-	
-	        }
-	    }, {
-	        key: 'handleInputChange',
-	        value: function handleInputChange(e) {
-	            //set local state
-	            this.setState(_defineProperty({}, e.target.name, e.target.value));
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(_Signup2.default, _extends({ handleInputChange: this.handleInputChange, signUpUser: this.signUpUser }, this.state, { handleAddress: this.handleAddress }));
-	        }
-	    }, {
-	        key: 'signUpUser',
-	        value: function signUpUser(e) {
-	            e.preventDefault();
-	            var user = {
-	                first: e.target.first.value,
-	                last: e.target.last.value,
-	                address: e.target.address.value,
-	                phone: e.target.phone.value,
-	                password: e.target.password.value
-	            };
-	
-	            Promise.all([this.props.addUToDb(user)]).then(function () {
-	                //redirect to whatever page
-	                // this.props.router.push('welcome/');
-	            });
-	
-	            this.setState({
-	                first: '',
-	                last: '',
-	                address: '',
-	                phone: '',
-	                password: ''
-	            });
-	        }
-	    }]);
-	
-	    return SignupContainer;
-	}(_react.Component);
-	
-	var mapStateToProps = function mapStateToProps(state, ownProps) {
-	    return {};
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {
-	        addUToDb: function addUToDb(user) {
-	            dispatch((0, _users.addUToDb)(user));
-	        }
-	    };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SignupContainer);
-
-/***/ },
-/* 301 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	exports.default = function (props) {
-	    return _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	            "h3",
-	            null,
-	            "Welcome to Klemm Bones! "
-	        ),
-	        _react2.default.createElement(
-	            "h4",
-	            null,
-	            "Standard signup form below"
-	        ),
-	        _react2.default.createElement(
-	            "form",
-	            { id: "new-signup-form", className: "form-group", style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
-	                    return props.signUpUser(e);
-	                } },
-	            _react2.default.createElement("input", {
-	                id: "first-name-input",
-	                name: "first",
-	                className: "form-control",
-	                placeholder: "Enter first name",
-	                onChange: function onChange(e) {
-	                    return props.handleInputChange(e);
-	                },
-	                value: props.first
-	            }),
-	            _react2.default.createElement("input", {
-	                id: "last-name-input",
-	                name: "last",
-	                className: "form-control",
-	                placeholder: "Enter last name",
-	                onChange: function onChange(e) {
-	                    return props.handleInputChange(e);
-	                },
-	                value: props.last
-	            }),
-	            _react2.default.createElement("input", {
-	                id: "address-input",
-	                name: "address",
-	                className: "form-control",
-	                placeholder: "Enter address",
-	                onChange: function onChange(e) {
-	                    return props.handleInputChange(e);
-	                },
-	                onBlur: function onBlur(e) {
-	                    return props.handleAddress(e);
-	                },
-	                value: props.address
-	            }),
-	            _react2.default.createElement("input", {
-	                id: "phone-input",
-	                name: "phone",
-	                className: "form-control",
-	                placeholder: "Enter phone number - this is used as your login id, so make sure it's unique (but it doesn't have to be real)",
-	                onChange: function onChange(e) {
-	                    return props.handleInputChange(e);
-	                },
-	                value: props.phone
-	
-	            }),
-	            _react2.default.createElement("input", {
-	                id: "password-input",
-	                name: "password",
-	                className: "form-control",
-	                placeholder: "Enter password",
-	                onChange: function onChange(e) {
-	                    return props.handleInputChange(e);
-	                },
-	                value: props.password
-	            }),
-	            _react2.default.createElement(
-	                "button",
-	                { id: "signup-submit", type: "submit", form: "new-signup-form", value: "Submit",
-	                    className: "btn btn-primary btn-block" },
-	                _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
-	                " Sign me up"
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
-	                "Please enter a valid name"
-	            )
-	        )
-	    );
-	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ },
+/* 300 */,
+/* 301 */,
 /* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31851,6 +31515,73 @@
 	  transformer: undefined
 	};
 	module.exports = exports["default"];
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports.storeShape = exports.subscriptionShape = undefined;
+	
+	var _react = __webpack_require__(1);
+	
+	var subscriptionShape = exports.subscriptionShape = _react.PropTypes.shape({
+	  trySubscribe: _react.PropTypes.func.isRequired,
+	  tryUnsubscribe: _react.PropTypes.func.isRequired,
+	  notifyNestedSubs: _react.PropTypes.func.isRequired,
+	  isSubscribed: _react.PropTypes.func.isRequired
+	});
+	
+	var storeShape = exports.storeShape = _react.PropTypes.shape({
+	  subscribe: _react.PropTypes.func.isRequired,
+	  dispatch: _react.PropTypes.func.isRequired,
+	  getState: _react.PropTypes.func.isRequired
+	});
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function () {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'btn btn-primary btn-block newGameButton' },
+	            _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/login' },
+	                'Start A New Game'
+	            )
+	        ),
+	        _react2.default.createElement(
+	            'span',
+	            { className: 'btn btn-primary btn-block joinGameButton' },
+	            _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/login' },
+	                'Join A Game'
+	            )
+	        )
+	    );
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(178);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);
