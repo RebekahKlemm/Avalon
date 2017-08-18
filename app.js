@@ -45,10 +45,10 @@ io.on('connection', function(socket){
 
 
 //Synch the database
-// db.sync()
+db.sync()
 
 // Reset the database:
-db.sync({force: true})
+// db.sync({force: true})
 
 http.listen(3001, function () {
     console.log('Server is listening on port 3001');

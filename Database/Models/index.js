@@ -1,11 +1,14 @@
 'use strict';
 
-
-const User = require('./userModel');
+const Character = require('./characterModel');
+const Mission = require('./missionModel');
+const MissionBoard = require('./missionBoardModel');
 
 // Set up Relationships
 
 
 module.exports = {
-    User: User
+    Character: Character,
+    Mission: Mission,
+    MissionBoard: MissionBoard
 };
