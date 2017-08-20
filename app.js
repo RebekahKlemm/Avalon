@@ -3,6 +3,7 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 const db = require('./Database/_db');
+const newCreateSeeds = require('./Database/seed');
 
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -46,6 +47,9 @@ io.on('connection', function(socket){
 
 //Synch the database
 db.sync()
+    .then(newCreateSeeds)
+    .then(freshDatabase => console.log(`Seeded database OK`))
+    .catch(error => console.error(error));
 
 // Reset the database:
 // db.sync({force: true})
