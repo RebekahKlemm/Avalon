@@ -1,15 +1,28 @@
 import React from 'react'
-import {ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS, DELETE_USER} from '../actions/constants';
+import {
+    // currently used
+    UPDATEUSERLOGINSTATUS,
+    // for reference
+    ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS, DELETE_USER
+} from '../actions/constants';
 
 const initialState = {
     allUsers: [],
     currentUser: {}
-}
+};
 
 
 export default function (state = initialState, action) {
-    let newState = Object.assign({}, state)
+    let newState = Object.assign({}, state);
     switch (action.type) {
+        case UPDATEUSERLOGINSTATUS:
+            newState.currentUser=Object.assign({}, {id: action.userID, status: action.status});
+            break;
+
+
+
+
+            ///////FOR REFERENCE//////
         case ADD_USER:
            newState.allUsers = [...newState.allUsers, action.user];
             break;
