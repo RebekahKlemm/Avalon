@@ -52,7 +52,7 @@ db.sync()
     .catch(error => console.error(error));
 
 // Reset the database:
-// db.sync({force: true})
+// db.sync({force: true});
 
 http.listen(3001, function () {
     console.log('Server is listening on port 3001');
