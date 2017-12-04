@@ -1,7 +1,7 @@
 const express = require('express');
 const {MissionBoard, Mission} = require('../Database/Models/index');
 
-// This router is mounted on /api/missionBoards
+// This router is mounted on /api/missions
 const router = express.Router();
 
 router.get('/', function (req, res, next){
