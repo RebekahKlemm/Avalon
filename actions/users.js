@@ -1,5 +1,16 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS, REFRESH_USERS} from './constants';
+import {ADD_USER, RECEIVE_USERS, REFRESH_USERS, UPDATEUSERLOGINSTATUS} from './constants';
+
+export const updateUserLoginStatus = function(status, userID){
+    return{
+        type: UPDATEUSERLOGINSTATUS,
+        status: status,
+        userID: userID
+    }
+};
+
+
+/////////////////////////FOR REFERENCE/////////////
 
 export const addUser = function (user) {
     return {
