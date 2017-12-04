@@ -1,18 +1,26 @@
-import React, {Component} from 'react';
+// Third-Party
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// import Login from '../Login';
-import {setSession} from '../../actions/users'
+// Store Functions
+import {updateUserLoginStatus} from '../../actions/users';
+// Components
+import Waiting from './Waiting';
 
 class LoginContainer extends Component{
     constructor(props){
-        super(props)
+        super(props);
+
         this.state = {
-            // phone: '',
-            // password: ''
-        }
-        // this.handleInputChange = this.handleInputChange.bind(this);
-        // this.loginUser = this.loginUser.bind(this);
+            message: ""
+        };
+
+    }
+
+    componentDidMount() {
+        var _this = this;
+        window.addEventListener('fbload', function(evt) {
+            _this.props.updateUserLoginStatus(evt.detail.status, evt.detail.id);
+        });
     }
 
     // handleInputChange(e){
@@ -20,50 +28,73 @@ class LoginContainer extends Component{
     // }
 
     render(){
+        if(this.props.currentUser && this.props.currentUser.status === 'connected'){
+            return(
+                <div>
+                    User is Connected!  Let's show 'em the app!
+                </div>
+            )
+        } else{
+            return(
+                <Waiting></Waiting>
+            )
+        }
+
+
+        // return(
+        //     <div
+        //         className="fb-login-button"
+        //         data-max-rows="1"
+        //         data-size="large"
+        //         data-button-type="continue_with"
+        //         data-show-faces="true"
+        //         data-auto-logout-link="false"
+        //         data-use-continue-as="false"
+        //     >
+        //     </div>
+        // )
+
+
+        // return(
+        //     <div>
+        //         <div
+        //             className="fb-login-button"
+        //             data-width="300"
+        //             data-max-rows="1"
+        //             data-size="large"
+        //             data-button-type="continue_with"
+        //             data-show-faces="false"
+        //             data-auto-logout-link="false"
+        //             data-use-continue-as="true">
+        //         </div>
+        //         <div>{this.state.message}</div>
+        //     </div>
+        //     )
         // return (<Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}/>)
+        //     <fb:login-button
+        // scope="public_profile,email"
+        // onlogin="checkLoginState();">
+        //     </fb:login-button>
     }
 
-    // loginUser(e){
-    //     e.preventDefault();
-    //     const loginAttempt = {
-    //         phone: e.target.phone.value,
-    //         password: e.target.password.value,
-    //         user:{}
-    //     };
-    //     this.props.allUsers.map(user => {
-    //         if (loginAttempt.phone === user.phone && loginAttempt.password === user.password){
-    //
-    //             this.props.setSession(user)
-    //
-    //             this.setState({
-    //                 phone: '',
-    //                 password: '',
-    //                 user:user
-    //             });
-    //             //send user to next page, possibly with a delay if things don't load properly
-    //             // window.setTimeout(() => this.props.router.push(user.role + '/'+loginAttempt.phone), 1000);
-    //
-    //         }
-    //     });
-    //
-    // }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        // allUsers: state.users.allUsers
+        allUsers: state.users.allUsers,
+        currentUser: state.users.currentUser
     };
-}
+};
 
 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        // setSession: function(user){
-        //     dispatch(setSession(user));
-        // }
+        updateUserLoginStatus: function(status, id) {
+            dispatch(updateUserLoginStatus(status, id))
+        }
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
 
