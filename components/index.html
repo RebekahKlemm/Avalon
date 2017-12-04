@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link href="/style.css" rel="stylesheet" />
     <script src='/bundle.js' defer ></script>
-
 </head>
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -17,14 +16,34 @@
     <script>
         window.fbAsyncInit = function() {
             FB.init({
-                appId      : 'Ava',
+                appId      : '1495844593802421',
                 cookie     : true,
                 xfbml      : true,
                 version    : 'v2.8'
             });
 
-            FB.AppEvents.logPageView();
+                FB.AppEvents.logPageView();
 
+            FB.getLoginStatus(function(response) {
+                var currentUser = {id: null, status: response.status};
+                switch(response.status){
+                    case "connected":
+                        // the user is logged in to Facebook and my app, I have an authResponse object here, send them through to the game
+                        console.log('facebook status: connected');
+                        currentUser.id = response.authResponse.userID;
+                        var event = new CustomEvent('fbload', {bubbles: true, cancelable: true, detail: currentUser});
+                        app.dispatchEvent(event);
+                        break;
+                    case "not_authorized":
+                        // the user is logged in to Facebook but hasn't logged in to my app, send them through to the game?
+                        console.log('facebook status: not_authorized');
+                        break;
+                    case "unknown":
+                        // the person is not logged in to Facebook, prompt with Facebook login
+                        console.log('facebook status: unknown');
+                        break;
+                }
+            });
         };
 
         (function(d, s, id){
