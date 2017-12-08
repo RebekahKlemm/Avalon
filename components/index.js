@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import {App} from './App';
+import Welcome from './Welcome';
 import LoginContainer from './containers/LoginContainer';
 import Waiting from './containers/Waiting';
 import {Provider} from 'react-redux';
@@ -11,7 +12,7 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={browserHistory}>
             <Route path='/' component={App}>
-                <IndexRoute component={LoginContainer}/>
+                <IndexRoute component={Welcome}/>
                 <Route path='/login' component={LoginContainer}/>
                 <Route path='/waiting' component={Waiting}/>
             </Route>
@@ -19,4 +20,6 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('app')
 );
+
+
 
