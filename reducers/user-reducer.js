@@ -1,9 +1,9 @@
 import React from 'react'
 import {
     // currently used
-    UPDATEUSERLOGINSTATUS,
+    LOGIN,
     // for reference
-    ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS, DELETE_USER
+    UPDATEUSERLOGINSTATUS, ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS, DELETE_USER
 } from '../actions/constants';
 
 const initialState = {
@@ -15,14 +15,15 @@ const initialState = {
 export default function (state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
-        case UPDATEUSERLOGINSTATUS:
-            newState.currentUser=Object.assign({}, {id: action.userID, status: action.status});
+        case LOGIN:
+            newState.currentUser=Object.assign({}, {name: action.userName});
             break;
 
 
-
-
             ///////FOR REFERENCE//////
+        case UPDATEUSERLOGINSTATUS:
+            newState.currentUser=Object.assign({}, {id: action.userID, status: action.status});
+            break;
         case ADD_USER:
            newState.allUsers = [...newState.allUsers, action.user];
             break;
