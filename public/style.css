@@ -1,8 +1,16 @@
+/*.app {*/
+    /*padding: 1em 1em 1em 1em;*/
+    /*font-size: 50px;*/
+/*}*/
+
 * {
     box-sizing: border-box; }
 
 #main {
-    padding-top: 5em; }
+    padding: 2em 1em 0em 1em;
+    font-size: 50px;
+}
+
 
 
 /*footer {*/
@@ -23,24 +31,24 @@
 /*footer .progress-bar {*/
     /*transition: none !important; }*/
 
-.newGameButton, .joinGameButton {
-    margin-top: 2em;
-    margin-bottom: 3em;
-    padding: 1em;
-    font-size: 6em;
-}
+/*.newGameButton, .joinGameButton {*/
+     /*margin-top: 2em;*/
+     /*margin-bottom: 3em;*/
+     /*padding: 1em;*/
+     /*font-size: 6em;*/
+ /*}*/
 
-a {
-    color: white;
-}
+/*a {*/
+    /*color: white;*/
+/*}*/
 
 
-.clearfix :after {
-    content: " "; /* Older browser do not support empty content */
-    visibility: hidden;
-    display: block;
-    height: 0;
-    clear: both;
-}
+/*.clearfix :after {*/
+    /*content: " "; !* Older browser do not support empty content *!*/
+    /*visibility: hidden;*/
+    /*display: block;*/
+    /*height: 0;*/
+    /*clear: both;*/
+/*}*/
 
 
