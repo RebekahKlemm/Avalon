@@ -11,11 +11,23 @@ class LoginContainer extends Component{
         super(props);
 
         this.state = {
-            userName: ""
+            userName: "",
+            role: props.location.query.role,
+            key : this.generateKey()
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.loginUser = this.loginUser.bind(this);
+        this.generateKey = this.generateKey.bind(this);
+    }
+
+    generateKey() {
+        if(this.props.location.query.role === 'organizer') {
+            return Math.round(Math.random() * (90000 - 1000) + 10000);
+        }
+        else {
+            return null;
+        }
     }
 
     handleInputChange(e){
@@ -33,7 +45,7 @@ class LoginContainer extends Component{
     }
 
     render(){
-        if (this.props.location.query.role === 'organizer') {
+        if (this.state.role === 'organizer') {
             return (
                 <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
             )
