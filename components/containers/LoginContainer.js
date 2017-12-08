@@ -33,9 +33,16 @@ class LoginContainer extends Component{
     }
 
     render(){
-        return (
-          <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
-        )
+        if (this.props.location.query.role === 'organizer') {
+            return (
+                <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
+            )
+        } else {
+            return (
+                <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
+            )
+        }
+
     }
 
 }
