@@ -2,10 +2,6 @@ var Sequelize = require('sequelize');
 var db = require('../_db');
 
 var playerSchema = {
-    character: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
     name: {
         type: Sequelize.STRING,
         allowNull: true
