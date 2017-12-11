@@ -1,8 +1,20 @@
 const db = require('./_db');
 
-const {Character, Mission, MissionBoard} = require('./Models/index');
+const {Character, Mission, MissionBoard, Game, Player} = require('./Models/index');
 
 function newCreateSeeds() {
+    const game = {
+        roomId: 12345
+    };
+
+    const player1 = {
+        name: null
+    };
+
+    const player2 = {
+        name: null
+    };
+
     const character1 = {
         name: "Merlin",
         team: "good",
@@ -31,13 +43,15 @@ function newCreateSeeds() {
     };
 
     const mb1 = {
-        numberOfPlayers: 5,
-        missions: ['1', '2', '3', '2', '1']
+        numberOfPlayers: 5
     };
 
     return Promise.all([
+        Game.create(game),
         Character.create(character1),
         Character.create(character2),
+        Player.create(player1),
+        Player.create(player2),
         Mission.create(mission1),
         Mission.create(mission2),
         Mission.create(mission3),
