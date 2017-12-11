@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const db = require('./Database/_db');
 const newCreateSeeds = require('./Database/seed');
+const {Game, Player} = require('./Database/Models/index');
 
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -35,28 +36,58 @@ app.use(function (err, req, res, next) {
 });
 
 //Whenever someone connects this gets executed
-io.on('connection', function(socket){
-    console.log('A user connected');
+io.on('connection', function(client){
+    var game = {
+        roomKey: Math.round(Math.random() * (90000 - 1000) + 10000)
+    };
+
+    var player = {name : null};
+
+    client.on('start_a_game', () => {
+        console.log('starting a Game, creating a new player');
+        Game.create(game)
+            .then(function(newGame){
+                game = newGame;
+                return Player.create(player);
+            })
+            .then(function(newPlayer){
+                game.addPlayer(newPlayer);
+                return newPlayer;
+            })
+            .then(function(newPlayer){
+                client.emit('roomKey', game.dataValues.roomKey, newPlayer.id);
+            })
+    });
+
+    client.on('join_a_game', () => {
+        console.log('creating a new player that is available to join any game');
+        Player.create(player)
+            .then(function(newPlayer){
+                client.emit('assignPlayer', newPlayer.id);
+            });
+    });
+
 
     //Whenever someone disconnects this piece of code executed
-    socket.on('disconnect', function () {
+    client.on('disconnect', function () {
         console.log('A user disconnected');
     });
 });
 
 
+http.listen(3008, function () {
+    console.log('Server is listening on port 3008');
+});
+
 //Synch the database
-db.sync()
-    .then(newCreateSeeds)
-    .then(freshDatabase => console.log(`Seeded database OK`))
-    .catch(error => console.error(error));
+// db.sync()
+//     .then(newCreateSeeds)
+//     .then(freshDatabase => console.log(`Seeded database OK`))
+//     .catch(error => console.error(error));
 
 // Reset the database:
-// db.sync({force: true});
+db.sync();
 
-http.listen(3001, function () {
-    console.log('Server is listening on port 3001');
-});
 
 
 module.exports = app;
