@@ -26,7 +26,7 @@ const apiRouter = require('./routes/apiRouter');
 app.use('/api', apiRouter);
 
 //Here is where I serve up the first page
-app.get('/', function (req, res, next) {
+app.get('/*', function (req, res, next) {
     res.sendFile(path.join(__dirname, './components/index.html'));
 });
 
