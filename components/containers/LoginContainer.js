@@ -6,6 +6,8 @@ import {login} from '../../actions/users';
 // Components
 import Login from '../Login';
 
+import { joinAGame, startAGame } from '../api';
+
 class LoginContainer extends Component{
     constructor(props){
         super(props);
@@ -13,20 +15,22 @@ class LoginContainer extends Component{
         this.state = {
             userName: "",
             role: props.location.query.role,
-            key : this.generateKey()
+            key : 'no key yet',
+            currentPlayerId: 'no player yet'
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.loginUser = this.loginUser.bind(this);
-        this.generateKey = this.generateKey.bind(this);
-    }
 
-    generateKey() {
-        if(this.props.location.query.role === 'organizer') {
-            return Math.round(Math.random() * (90000 - 1000) + 10000);
-        }
-        else {
-            return null;
+        if (this.state.role === 'organizer') {
+            startAGame((err, roomKey, player) => this.setState({
+                key:roomKey,
+                currentPlayerId:player
+            }));
+        } else {
+            joinAGame((err, player) => this.setState({
+                currentPlayerId:player
+            }));
         }
     }
 
@@ -47,11 +51,23 @@ class LoginContainer extends Component{
     render(){
         if (this.state.role === 'organizer') {
             return (
-                <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
+                <div>
+                    <div>
+                        This is the roomKey value: {this.state.key}
+                        This is the currentPlayerId: {this.state.currentPlayerId}
+                    </div>
+                    <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
+                </div>
             )
         } else {
             return (
-                <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
+                <div>
+                    <div>
+                        This is the roomKey value: {this.state.key}
+                        This is the currentPlayerId: {this.state.currentPlayerId}
+                    </div>
+                    <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
+                </div>
             )
         }
 
