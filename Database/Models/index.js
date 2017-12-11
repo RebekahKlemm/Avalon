@@ -10,6 +10,9 @@ const Player = require('./playerModel');
 Game.hasMany(Player);
 Character.hasOne(Player);
 
+MissionBoard.hasOne(Game);
+MissionBoard.hasMany(Mission);
+
 module.exports = {
     Character: Character,
     Mission: Mission,
