@@ -15,7 +15,7 @@ class LoginContainer extends Component{
         this.state = {
             userName: "",
             role: props.location.query.role,
-            key : 'no key yet',
+            roomKey : 'no roomKey yet',
             currentPlayerId: 'no player yet'
         };
 
@@ -24,7 +24,7 @@ class LoginContainer extends Component{
 
         if (this.state.role === 'organizer') {
             startAGame((err, roomKey, player) => this.setState({
-                key:roomKey,
+                roomKey:roomKey,
                 currentPlayerId:player
             }));
         } else {
@@ -53,7 +53,7 @@ class LoginContainer extends Component{
             return (
                 <div>
                     <div>
-                        This is the roomKey value: {this.state.key}
+                        This is the roomKey value: {this.state.roomKey}
                         This is the currentPlayerId: {this.state.currentPlayerId}
                     </div>
                     <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
@@ -63,7 +63,7 @@ class LoginContainer extends Component{
             return (
                 <div>
                     <div>
-                        This is the roomKey value: {this.state.key}
+                        This is the roomKey value: {this.state.roomKey}
                         This is the currentPlayerId: {this.state.currentPlayerId}
                     </div>
                     <Login handleInputChange={this.handleInputChange} loginUser={this.loginUser} {...this.state}></Login>
