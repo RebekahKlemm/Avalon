@@ -8,6 +8,18 @@ export const login = function(userName){
     }
 };
 
+//asynch action creator (thunk)
+export function updateUserName(playerId, userName){
+    return function (dispatch){
+        return axios.put('/api/players/' + playerId, {name: userName})
+            .then(response => response.data)
+            .then(function(newUser){
+                // update on front end
+                dispatch(login(newUser.name))
+            })
+    }
+}
+
 
 /////////////////////////FOR REFERENCE/////////////
 

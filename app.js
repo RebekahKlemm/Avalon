@@ -55,7 +55,7 @@ io.on('connection', function(client){
                 return newPlayer;
             })
             .then(function(newPlayer){
-                client.emit('roomKey', game.dataValues.roomKey, newPlayer.id);
+                client.emit('roomKey', game.dataValues.roomKey, newPlayer);
             })
     });
 
@@ -63,7 +63,7 @@ io.on('connection', function(client){
         console.log('creating a new player that is available to join any game');
         Player.create(player)
             .then(function(newPlayer){
-                client.emit('assignPlayer', newPlayer.id);
+                client.emit('assignPlayer', newPlayer);
             });
     });
 

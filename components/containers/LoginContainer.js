@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Store Functions
-import {login} from '../../actions/users';
+import {updateUserName} from '../../actions/users';
 // Components
 import Login from '../Login';
 
@@ -16,6 +16,7 @@ class LoginContainer extends Component{
             userName: "",
             role: props.location.query.role,
             roomKey : 'no roomKey yet',
+            currentPlayer: {},
             currentPlayerId: 'no player yet'
         };
 
@@ -25,11 +26,13 @@ class LoginContainer extends Component{
         if (this.state.role === 'organizer') {
             startAGame((err, roomKey, player) => this.setState({
                 roomKey:roomKey,
-                currentPlayerId:player
+                currentPlayer: player,
+                currentPlayerId:player.id
             }));
         } else {
             joinAGame((err, player) => this.setState({
-                currentPlayerId:player
+                currentPlayer: player,
+                currentPlayerId:player.id
             }));
         }
     }
@@ -41,7 +44,7 @@ class LoginContainer extends Component{
     loginUser(e) {
         e.preventDefault();
         Promise.all([
-            this.props.login(this.state.userName),
+            this.props.updateUserName(this.state.currentPlayerId, this.state.userName),
         ]).then(() => {
             //redirect to whatever page
             this.props.router.push('waiting/');
@@ -86,8 +89,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        login: function(userName) {
-            dispatch(login(userName))
+        updateUserName: function(playerId, userName) {
+            dispatch(updateUserName(playerId, userName))
         }
     }
 };
