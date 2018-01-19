@@ -27210,6 +27210,7 @@
 	            userName: "",
 	            role: props.location.query.role,
 	            roomKey: 'no roomKey yet',
+	            currentPlayer: {},
 	            currentPlayerId: 'no player yet'
 	        };
 	
@@ -27220,13 +27221,15 @@
 	            (0, _api.startAGame)(function (err, roomKey, player) {
 	                return _this.setState({
 	                    roomKey: roomKey,
-	                    currentPlayerId: player
+	                    currentPlayer: player,
+	                    currentPlayerId: player.id
 	                });
 	            });
 	        } else {
 	            (0, _api.joinAGame)(function (err, player) {
 	                return _this.setState({
-	                    currentPlayerId: player
+	                    currentPlayer: player,
+	                    currentPlayerId: player.id
 	                });
 	            });
 	        }
@@ -27244,7 +27247,7 @@
 	            var _this2 = this;
 	
 	            e.preventDefault();
-	            Promise.all([this.props.login(this.state.userName)]).then(function () {
+	            Promise.all([this.props.updateUserName(this.state.currentPlayerId, this.state.userName)]).then(function () {
 	                //redirect to whatever page
 	                _this2.props.router.push('waiting/');
 	            });
@@ -27296,8 +27299,8 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 	    return {
-	        login: function login(userName) {
-	            dispatch((0, _users.login)(userName));
+	        updateUserName: function updateUserName(playerId, userName) {
+	            dispatch((0, _users.updateUserName)(playerId, userName));
 	        }
 	    };
 	};
@@ -29559,6 +29562,7 @@
 	    value: true
 	});
 	exports.refreshUsers = exports.receiveUsers = exports.addUser = exports.updateUserLoginStatus = exports.login = undefined;
+	exports.updateUserName = updateUserName;
 	exports.addUToDb = addUToDb;
 	exports.setSession = setSession;
 	
@@ -29576,6 +29580,18 @@
 	        userName: userName
 	    };
 	};
+	
+	//asynch action creator (thunk)
+	function updateUserName(playerId, userName) {
+	    return function (dispatch) {
+	        return _axios2.default.put('/api/players/' + playerId, { name: userName }).then(function (response) {
+	            return response.data;
+	        }).then(function (newUser) {
+	            // update on front end
+	            dispatch(login(newUser.name));
+	        });
+	    };
+	}
 	
 	/////////////////////////FOR REFERENCE/////////////
 	
