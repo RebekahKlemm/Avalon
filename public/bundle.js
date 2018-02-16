@@ -27209,12 +27209,13 @@
 	        _this.state = {
 	            userName: "",
 	            role: props.location.query.role,
-	            roomKey: 'no roomKey yet',
+	            roomKey: "",
 	            currentPlayer: {},
 	            currentPlayerId: 'no player yet'
 	        };
 	
-	        _this.handleInputChange = _this.handleInputChange.bind(_this);
+	        _this.handlePlayerNameInput = _this.handlePlayerNameInput.bind(_this);
+	        _this.handleRoomKeyInput = _this.handleRoomKeyInput.bind(_this);
 	        _this.loginUser = _this.loginUser.bind(_this);
 	
 	        if (_this.state.role === 'organizer') {
@@ -27237,9 +27238,14 @@
 	    }
 	
 	    _createClass(LoginContainer, [{
-	        key: 'handleInputChange',
-	        value: function handleInputChange(e) {
+	        key: 'handlePlayerNameInput',
+	        value: function handlePlayerNameInput(e) {
 	            this.setState({ userName: e.target.value });
+	        }
+	    }, {
+	        key: 'handleRoomKeyInput',
+	        value: function handleRoomKeyInput(e) {
+	            this.setState({ roomKey: e.target.value });
 	        }
 	    }, {
 	        key: 'loginUser',
@@ -27262,12 +27268,22 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        'This is the roomKey value: ',
+	                        _react2.default.createElement(
+	                            'h2',
+	                            null,
+	                            'Game Room Key:'
+	                        ),
 	                        this.state.roomKey,
-	                        'This is the currentPlayerId: ',
-	                        this.state.currentPlayerId
+	                        _react2.default.createElement(
+	                            'h3',
+	                            null,
+	                            'Give this key to your friends'
+	                        )
 	                    ),
-	                    _react2.default.createElement(_Login2.default, _extends({ handleInputChange: this.handleInputChange, loginUser: this.loginUser }, this.state))
+	                    _react2.default.createElement(_Login2.default, _extends({
+	                        handlePlayerNameInput: this.handlePlayerNameInput,
+	                        loginUser: this.loginUser
+	                    }, this.state))
 	                );
 	            } else {
 	                return _react2.default.createElement(
@@ -27281,7 +27297,11 @@
 	                        'This is the currentPlayerId: ',
 	                        this.state.currentPlayerId
 	                    ),
-	                    _react2.default.createElement(_Login2.default, _extends({ handleInputChange: this.handleInputChange, loginUser: this.loginUser }, this.state))
+	                    _react2.default.createElement(_Login2.default, _extends({
+	                        handlePlayerNameInput: this.handlePlayerNameInput,
+	                        loginUser: this.loginUser,
+	                        handleRoomKeyInput: this.handleRoomKeyInput
+	                    }, this.state))
 	                );
 	            }
 	        }
@@ -31152,45 +31172,41 @@
 /* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
 	exports.default = function (props) {
-	    return _react2.default.createElement(
-	        "form",
-	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
-	                return props.loginUser(e);
-	            } },
-	        _react2.default.createElement("input", {
-	            name: "userName",
-	            className: "form-control",
-	            placeholder: "Enter your name",
-	            onChange: function onChange(e) {
-	                return props.handleInputChange(e);
-	            },
-	            value: props.userName
-	        }),
-	        _react2.default.createElement(
-	            "button",
-	            { id: "login-submit", type: "submit", form: "new-login-form", value: "Submit",
-	                className: "btn btn-primary btn-block" },
-	            _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
-	            " SUBMIT"
-	        ),
-	        _react2.default.createElement(
-	            "div",
-	            { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
-	            "Please enter a valid name"
-	        )
-	    );
+	    switch (props.role) {
+	        case 'joiner':
+	            {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(_RoomKeyInput2.default, props),
+	                    _react2.default.createElement(_PlayerNameInput2.default, props)
+	                );
+	            }
+	        case 'organizer':
+	            {
+	                return _react2.default.createElement(_PlayerNameInput2.default, props);
+	            }
+	    }
 	};
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _RoomKeyInput = __webpack_require__(366);
+	
+	var _RoomKeyInput2 = _interopRequireDefault(_RoomKeyInput);
+	
+	var _PlayerNameInput = __webpack_require__(367);
+	
+	var _PlayerNameInput2 = _interopRequireDefault(_PlayerNameInput);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39267,6 +39283,89 @@
 	  transformer: undefined
 	};
 	module.exports = exports["default"];
+
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function (props) {
+	    return _react2.default.createElement(
+	        "form",
+	        { id: "roomkey-input-form", className: "form-group", style: { marginTop: '20px' } },
+	        _react2.default.createElement("input", {
+	            name: "userName",
+	            className: "form-control",
+	            placeholder: "Enter roomkey",
+	            onChange: function onChange(e) {
+	                return props.handleRoomKeyInput(e);
+	            },
+	            value: props.roomKey
+	        }),
+	        _react2.default.createElement(
+	            "div",
+	            { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
+	            "Please enter a valid roomKey"
+	        )
+	    );
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	exports.default = function (props) {
+	    return _react2.default.createElement(
+	        "form",
+	        { id: "new-login-form", className: "form-group", style: { marginTop: '20px' }, onSubmit: function onSubmit(e) {
+	                return props.loginUser(e);
+	            } },
+	        _react2.default.createElement("input", {
+	            name: "userName",
+	            className: "form-control",
+	            placeholder: "Enter your name",
+	            onChange: function onChange(e) {
+	                return props.handlePlayerNameInput(e);
+	            },
+	            value: props.userName
+	        }),
+	        _react2.default.createElement(
+	            "button",
+	            { id: "login-submit", type: "submit", form: "new-login-form", value: "Submit",
+	                className: "btn btn-primary btn-block" },
+	            _react2.default.createElement("span", { className: "glyphicon glyphicon-plus" }),
+	            " SUBMIT"
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            { id: "alert-warning", hidden: "true", className: "alert alert-warning" },
+	            "Please enter a valid name"
+	        )
+	    );
+	};
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ })
 /******/ ]);
