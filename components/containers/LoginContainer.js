@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 // Store Functions
 import {updateUserName} from '../../actions/users';
 // Components
-import Login from '../Login';
+import RoomKeyInput from '../RoomKeyInput';
+import PlayerNameInput from '../PlayerNameInput';
 
 import { joinAGame, startAGame } from '../api';
 
@@ -57,40 +58,40 @@ class LoginContainer extends Component{
     }
 
     render(){
-        if (this.state.role === 'organizer') {
-            return (
-                <div>
+        switch(this.state.role) {
+            case 'organizer' : {
+                return (
                     <div>
-                        <h2>Game Room Key:</h2>
-                        {this.state.roomKey}
-                        <h3>Give this key to your friends</h3>
+                        <div>
+                            <h2>Game Room Key:</h2>
+                            {this.state.roomKey}
+                            <h3>Give this key to your friends</h3>
+                        </div>
+                        <PlayerNameInput
+                            handlePlayerNameInput={this.handlePlayerNameInput}
+                            loginUser={this.loginUser}
+                            {...this.state}>
+                        </PlayerNameInput>
                     </div>
-                    <Login
-                        handlePlayerNameInput={this.handlePlayerNameInput}
-                        loginUser={this.loginUser}
-                        {...this.state}>
-                    </Login>
-                </div>
-            )
-        } else {
-            return (
-                <div>
+                )
+            }
+            case 'joiner' : {
+                return (
                     <div>
-                        This is the roomKey value: {this.state.roomKey}
-                        This is the currentPlayerId: {this.state.currentPlayerId}
+                        <RoomKeyInput
+                            handleRoomKeyInput={this.handleRoomKeyInput}
+                            {...this.state}>
+                        </RoomKeyInput>
+                        <PlayerNameInput
+                            handlePlayerNameInput={this.handlePlayerNameInput}
+                            loginUser={this.loginUser}
+                            {...this.state}>
+                        </PlayerNameInput>
                     </div>
-                    <Login
-                        handlePlayerNameInput={this.handlePlayerNameInput}
-                        loginUser={this.loginUser}
-                        handleRoomKeyInput={this.handleRoomKeyInput}
-                        {...this.state}>
-                    </Login>
-                </div>
-            )
+                )
+            }
         }
-
     }
-
 }
 
 const mapStateToProps = (state, ownProps) => {

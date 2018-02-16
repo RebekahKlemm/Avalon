@@ -27179,9 +27179,13 @@
 	
 	var _users = __webpack_require__(282);
 	
-	var _Login = __webpack_require__(309);
+	var _RoomKeyInput = __webpack_require__(366);
 	
-	var _Login2 = _interopRequireDefault(_Login);
+	var _RoomKeyInput2 = _interopRequireDefault(_RoomKeyInput);
+	
+	var _PlayerNameInput = __webpack_require__(367);
+	
+	var _PlayerNameInput2 = _interopRequireDefault(_PlayerNameInput);
 	
 	var _api = __webpack_require__(310);
 	
@@ -27261,48 +27265,47 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            if (this.state.role === 'organizer') {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'div',
-	                        null,
-	                        _react2.default.createElement(
-	                            'h2',
+	            switch (this.state.role) {
+	                case 'organizer':
+	                    {
+	                        return _react2.default.createElement(
+	                            'div',
 	                            null,
-	                            'Game Room Key:'
-	                        ),
-	                        this.state.roomKey,
-	                        _react2.default.createElement(
-	                            'h3',
+	                            _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'h2',
+	                                    null,
+	                                    'Game Room Key:'
+	                                ),
+	                                this.state.roomKey,
+	                                _react2.default.createElement(
+	                                    'h3',
+	                                    null,
+	                                    'Give this key to your friends'
+	                                )
+	                            ),
+	                            _react2.default.createElement(_PlayerNameInput2.default, _extends({
+	                                handlePlayerNameInput: this.handlePlayerNameInput,
+	                                loginUser: this.loginUser
+	                            }, this.state))
+	                        );
+	                    }
+	                case 'joiner':
+	                    {
+	                        return _react2.default.createElement(
+	                            'div',
 	                            null,
-	                            'Give this key to your friends'
-	                        )
-	                    ),
-	                    _react2.default.createElement(_Login2.default, _extends({
-	                        handlePlayerNameInput: this.handlePlayerNameInput,
-	                        loginUser: this.loginUser
-	                    }, this.state))
-	                );
-	            } else {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'div',
-	                        null,
-	                        'This is the roomKey value: ',
-	                        this.state.roomKey,
-	                        'This is the currentPlayerId: ',
-	                        this.state.currentPlayerId
-	                    ),
-	                    _react2.default.createElement(_Login2.default, _extends({
-	                        handlePlayerNameInput: this.handlePlayerNameInput,
-	                        loginUser: this.loginUser,
-	                        handleRoomKeyInput: this.handleRoomKeyInput
-	                    }, this.state))
-	                );
+	                            _react2.default.createElement(_RoomKeyInput2.default, _extends({
+	                                handleRoomKeyInput: this.handleRoomKeyInput
+	                            }, this.state)),
+	                            _react2.default.createElement(_PlayerNameInput2.default, _extends({
+	                                handlePlayerNameInput: this.handlePlayerNameInput,
+	                                loginUser: this.loginUser
+	                            }, this.state))
+	                        );
+	                    }
 	            }
 	        }
 	    }]);
@@ -31169,48 +31172,7 @@
 	var UPDATEUSERLOGINSTATUS = exports.UPDATEUSERLOGINSTATUS = 'UPDATEUSERLOGINSTATUS';
 
 /***/ }),
-/* 309 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	exports.default = function (props) {
-	    switch (props.role) {
-	        case 'joiner':
-	            {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(_RoomKeyInput2.default, props),
-	                    _react2.default.createElement(_PlayerNameInput2.default, props)
-	                );
-	            }
-	        case 'organizer':
-	            {
-	                return _react2.default.createElement(_PlayerNameInput2.default, props);
-	            }
-	    }
-	};
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _RoomKeyInput = __webpack_require__(366);
-	
-	var _RoomKeyInput2 = _interopRequireDefault(_RoomKeyInput);
-	
-	var _PlayerNameInput = __webpack_require__(367);
-	
-	var _PlayerNameInput2 = _interopRequireDefault(_PlayerNameInput);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
+/* 309 */,
 /* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
