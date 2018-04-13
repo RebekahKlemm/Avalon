@@ -19,6 +19,9 @@ export default function (state = initialState, action) {
             newState.currentUser=Object.assign({}, {name: action.userName});
             newState.allUsers.push(newState.currentUser);
             break;
+
+
+
             ///////FOR REFERENCE//////
         case UPDATEUSERLOGINSTATUS:
             newState.currentUser=Object.assign({}, {id: action.userID, status: action.status});

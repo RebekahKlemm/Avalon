@@ -10,21 +10,16 @@ import PlayerNameInput from '../PlayerNameInput';
 import { joinAGame, startAGame } from '../api';
 
 class LoginContainer extends Component{
-    constructor(props){
-        super(props);
 
-        this.state = {
-            userName: "",
-            role: props.location.query.role,
-            roomKey : "",
-            currentPlayer: {},
-            currentPlayerId: 'no player yet'
-        };
+    state = {
+        userName: "",
+        role: props.location.query.role,
+        roomKey : "",
+        currentPlayer: {},
+        currentPlayerId: 'no player yet'
+    };
 
-        this.handlePlayerNameInput = this.handlePlayerNameInput.bind(this);
-        this.handleRoomKeyInput = this.handleRoomKeyInput.bind(this);
-        this.loginUser = this.loginUser.bind(this);
-
+    componentDidMount() {
         if (this.state.role === 'organizer') {
             startAGame((err, roomKey, player) => this.setState({
                 roomKey:roomKey,
@@ -39,15 +34,15 @@ class LoginContainer extends Component{
         }
     }
 
-    handlePlayerNameInput(e){
+    handlePlayerNameInput = (e) => {
         this.setState({userName:e.target.value});
     }
 
-    handleRoomKeyInput(e){
+    handleRoomKeyInput = (e) => {
         this.setState({roomKey:e.target.value});
     }
 
-    loginUser(e) {
+    loginUser = (e) => {
         e.preventDefault();
         Promise.all([
             this.props.updateUserName(this.state.currentPlayerId, this.state.userName),
