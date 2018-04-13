@@ -27322,15 +27322,7 @@
 	    };
 	};
 	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
-	    return {
-	        updateUserName: function updateUserName(playerId, userName) {
-	            dispatch((0, _users.updateUserName)(playerId, userName));
-	        }
-	    };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(LoginContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { updateUserName: _users.updateUserName })(LoginContainer);
 
 /***/ }),
 /* 245 */

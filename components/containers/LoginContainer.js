@@ -102,16 +102,6 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        updateUserName: function(playerId, userName) {
-            dispatch(updateUserName(playerId, userName))
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default connect(mapStateToProps, { updateUserName })(LoginContainer);
 
 
