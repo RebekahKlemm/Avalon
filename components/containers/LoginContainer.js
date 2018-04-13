@@ -13,11 +13,17 @@ class LoginContainer extends Component{
 
     state = {
         userName: "",
-        role: props.location.query.role,
         roomKey : "",
+        role: "",
         currentPlayer: {},
         currentPlayerId: 'no player yet'
     };
+
+    componentWillMount() {
+        this.setState({
+            role: this.props.location.query.role,
+        });
+    }
 
     componentDidMount() {
         if (this.state.role === 'organizer') {

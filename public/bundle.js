@@ -27218,8 +27218,8 @@
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LoginContainer.__proto__ || Object.getPrototypeOf(LoginContainer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	            userName: "",
-	            role: props.location.query.role,
 	            roomKey: "",
+	            role: "",
 	            currentPlayer: {},
 	            currentPlayerId: 'no player yet'
 	        }, _this.handlePlayerNameInput = function (e) {
@@ -27236,6 +27236,13 @@
 	    }
 	
 	    _createClass(LoginContainer, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.setState({
+	                role: this.props.location.query.role
+	            });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this2 = this;
