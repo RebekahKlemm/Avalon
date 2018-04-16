@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Store Functions
-import {updateUserName} from '../../actions/users';
+import {updateUserName, addUserToGame } from '../../actions/users';
 // Components
 import RoomKeyInput from '../RoomKeyInput';
 import PlayerNameInput from '../PlayerNameInput';
@@ -52,6 +52,8 @@ class LoginContainer extends Component{
         e.preventDefault();
         Promise.all([
             this.props.updateUserName(this.state.currentPlayerId, this.state.userName),
+            // Refactor to only make this call if role !== 'organizer' (organizer automatically added to game in app.js)
+            this.props.addUserToGame(this.state.roomKey, this.state.currentPlayerId)
         ]).then(() => {
             //redirect to whatever page
             this.props.router.push('waiting/');
@@ -102,6 +104,6 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps, { updateUserName })(LoginContainer);
+export default connect(mapStateToProps, { updateUserName, addUserToGame })(LoginContainer);
 
 

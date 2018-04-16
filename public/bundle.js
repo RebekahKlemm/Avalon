@@ -27228,7 +27228,7 @@
 	            _this.setState({ roomKey: e.target.value });
 	        }, _this.loginUser = function (e) {
 	            e.preventDefault();
-	            Promise.all([_this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName)]).then(function () {
+	            Promise.all([_this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName), _this.props.addUserToGame(_this.state.roomKey, _this.state.currentPlayerId)]).then(function () {
 	                //redirect to whatever page
 	                _this.props.router.push('waiting/');
 	            });
@@ -27256,7 +27256,7 @@
 	                    });
 	                });
 	            } else {
-	                (0, _api.joinAGame)(function (err, player) {
+	                (0, _api.joinAGame)(this.state.roomKey, function (err, player) {
 	                    return _this2.setState({
 	                        currentPlayer: player,
 	                        currentPlayerId: player.id
@@ -27322,7 +27322,7 @@
 	    };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { updateUserName: _users.updateUserName })(LoginContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { updateUserName: _users.updateUserName, addUserToGame: _users.addUserToGame })(LoginContainer);
 
 /***/ }),
 /* 245 */
@@ -29580,6 +29580,7 @@
 	});
 	exports.refreshUsers = exports.receiveUsers = exports.addUser = exports.updateUserLoginStatus = exports.login = undefined;
 	exports.updateUserName = updateUserName;
+	exports.addUserToGame = addUserToGame;
 	exports.addUToDb = addUToDb;
 	exports.setSession = setSession;
 	
@@ -29606,6 +29607,18 @@
 	        }).then(function (newUser) {
 	            // update on front end
 	            dispatch(login(newUser.name));
+	        });
+	    };
+	}
+	function addUserToGame(roomKey, playerId) {
+	    return function (dispatch) {
+	        return _axios2.default.put('/api/players/' + playerId + '/game', { roomKey: roomKey }).then(function (response) {
+	            return response.data;
+	        }).then(function (newUser) {
+	            console.log('newUser', newUser);
+	
+	            // update on front end
+	            // dispatch(login(newUser.name))
 	        });
 	    };
 	}
@@ -31267,11 +31280,11 @@
 	
 	var socket = (0, _socket2.default)('http://localhost:3008');
 	
-	function joinAGame(cb) {
+	function joinAGame(roomKey, cb) {
 	    socket.on('assignPlayer', function (player) {
 	        return cb(null, player);
 	    });
-	    socket.emit('join_a_game');
+	    socket.emit('join_a_game', roomKey);
 	}
 	
 	function startAGame(cb) {

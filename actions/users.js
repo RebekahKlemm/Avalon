@@ -19,6 +19,19 @@ export function updateUserName(playerId, userName){
             })
     }
 }
+export function addUserToGame(roomKey, playerId){
+    return function (dispatch){
+        return axios.put('/api/players/' + playerId + '/game', {roomKey: roomKey})
+            .then(response => response.data)
+            .then(function(newUser){
+                console.log('newUser', newUser);
+
+                // update on front end
+                // dispatch(login(newUser.name))
+            })
+    }
+}
+
 
 
 /////////////////////////FOR REFERENCE/////////////

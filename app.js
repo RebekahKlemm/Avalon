@@ -44,7 +44,7 @@ io.on('connection', function(client){
     var player = {name : null};
 
     client.on('start_a_game', () => {
-        console.log('starting a Game, creating a new player');
+        console.log('starting a Game, creating a new player in that game');
         Game.create(game)
             .then(function(newGame){
                 game = newGame;
