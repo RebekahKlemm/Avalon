@@ -1,7 +1,7 @@
 import React from 'react';
 import { combineReducers } from 'redux'
-import users from './user-reducer';
+import players from './player-reducer';
 
 
 
-export default combineReducers({users});
+export default combineReducers({players});

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Store Functions
-import {updateUserName, addUserToGame } from '../../actions/users';
+import {updateUserName, registerJoiner } from '../../actions/players';
 // Components
 import RoomKeyInput from '../RoomKeyInput';
 import PlayerNameInput from '../PlayerNameInput';
@@ -59,10 +59,7 @@ class LoginContainer extends Component{
 
     loginJoiner = (e) => {
         e.preventDefault();
-        Promise.all([
-            this.props.updateUserName(this.state.currentPlayerId, this.state.userName),
-            this.props.addUserToGame(this.state.roomKey, this.state.currentPlayerId)
-        ])
+        this.props.registerJoiner(this.state.currentPlayerId, this.state.userName, this.state.roomKey)
             .then(() => {
                 //redirect to whatever page
                 this.props.router.push('waiting/');
@@ -108,11 +105,11 @@ class LoginContainer extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        allUsers: state.users.allUsers,
-        currentUser: state.users.currentUser
+        allPlayers: state.players.allPlayers,
+        currentPlayer: state.players.currentPlayer
     };
 };
 
-export default connect(mapStateToProps, { updateUserName, addUserToGame })(LoginContainer);
+export default connect(mapStateToProps, { updateUserName, registerJoiner })(LoginContainer);
 
 
