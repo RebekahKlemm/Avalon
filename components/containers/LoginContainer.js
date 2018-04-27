@@ -42,11 +42,11 @@ class LoginContainer extends Component{
 
     handlePlayerNameInput = (e) => {
         this.setState({userName:e.target.value});
-    }
+    };
 
     handleRoomKeyInput = (e) => {
         this.setState({roomKey:e.target.value});
-    }
+    };
 
     loginOrganizer = (e) => {
         e.preventDefault();
