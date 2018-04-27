@@ -24,29 +24,32 @@ router.get('/:id', function(req, res, next){
 
 router.put('/:id', function(req, res, next){
     Player.findById(req.params.id)
-        .then(function(player){
-            return player.update({
-                name: req.body.name
-            })
+        .then((player) => {
+            // update the player name
+            if(req.body.name) {
+                return player.update({
+                    name: req.body.name
+                })
+            } else {
+                return player;
+            }
         })
-        .then(function(player){
+        .then((player) => {
+            // add player to correct game based on the roomKey
+            if (req.body.roomKey) {
+               return Game.findOne({where:{roomKey:req.body.roomKey}})
+                   .then(function(game){
+                       game.addPlayer(player);
+                       return player;
+                   })
+            } else {
+                return player;
+            }
+        })
+        .then((player) => {
             res.send(player);
         })
         .catch(next);
-});
-
-// Refactor this to be handled in /:id route above (e.g. if req.body.roomKey, get the Game, etc)
-router.put('/:id/game', function(req, res,next){
-    let game = Promise.all([
-        Game.findOne({where:{roomKey:req.body.roomKey}}),
-        Player.findOne({where: {id:req.params.id}}),
-    ])
-    .then(([_game, player]) => {
-        return _game.addPlayer(player);
-    })
-    .catch(next);
-
-    res.send(game);
 });
 
 module.exports = router;

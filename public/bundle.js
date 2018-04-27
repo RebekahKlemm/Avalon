@@ -29614,7 +29614,7 @@
 	}
 	function addUserToGame(roomKey, playerId) {
 	    return function (dispatch) {
-	        return _axios2.default.put('/api/players/' + playerId + '/game', { roomKey: roomKey }).then(function (response) {
+	        return _axios2.default.put('/api/players/' + playerId, { roomKey: roomKey }).then(function (response) {
 	            return response.data;
 	        }).then(function (newUser) {
 	            console.log('newUser', newUser);
