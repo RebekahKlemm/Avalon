@@ -48,17 +48,26 @@ class LoginContainer extends Component{
         this.setState({roomKey:e.target.value});
     }
 
-    loginUser = (e) => {
+    loginOrganizer = (e) => {
+        e.preventDefault();
+        this.props.updateUserName(this.state.currentPlayerId, this.state.userName)
+            .then(() => {
+                //redirect to whatever page
+                this.props.router.push('waiting/');
+            });
+    };
+
+    loginJoiner = (e) => {
         e.preventDefault();
         Promise.all([
             this.props.updateUserName(this.state.currentPlayerId, this.state.userName),
-            // Refactor to only make this call if role !== 'organizer' (organizer automatically added to game in app.js)
             this.props.addUserToGame(this.state.roomKey, this.state.currentPlayerId)
-        ]).then(() => {
-            //redirect to whatever page
-            this.props.router.push('waiting/');
-        });
-    }
+        ])
+            .then(() => {
+                //redirect to whatever page
+                this.props.router.push('waiting/');
+            });
+    };
 
     render(){
         switch(this.state.role) {
@@ -72,7 +81,7 @@ class LoginContainer extends Component{
                         </div>
                         <PlayerNameInput
                             handlePlayerNameInput={this.handlePlayerNameInput}
-                            loginUser={this.loginUser}
+                            loginUser={this.loginOrganizer}
                             {...this.state}>
                         </PlayerNameInput>
                     </div>
@@ -87,7 +96,7 @@ class LoginContainer extends Component{
                         </RoomKeyInput>
                         <PlayerNameInput
                             handlePlayerNameInput={this.handlePlayerNameInput}
-                            loginUser={this.loginUser}
+                            loginUser={this.loginJoiner}
                             {...this.state}>
                         </PlayerNameInput>
                     </div>

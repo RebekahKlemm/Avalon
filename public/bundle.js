@@ -27226,11 +27226,15 @@
 	            _this.setState({ userName: e.target.value });
 	        }, _this.handleRoomKeyInput = function (e) {
 	            _this.setState({ roomKey: e.target.value });
-	        }, _this.loginUser = function (e) {
+	        }, _this.loginOrganizer = function (e) {
 	            e.preventDefault();
-	            Promise.all([_this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName),
-	            // Refactor to only make this call if role !== 'organizer' (organizer automatically added to game in app.js)
-	            _this.props.addUserToGame(_this.state.roomKey, _this.state.currentPlayerId)]).then(function () {
+	            _this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName).then(function () {
+	                //redirect to whatever page
+	                _this.props.router.push('waiting/');
+	            });
+	        }, _this.loginJoiner = function (e) {
+	            e.preventDefault();
+	            Promise.all([_this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName), _this.props.addUserToGame(_this.state.roomKey, _this.state.currentPlayerId)]).then(function () {
 	                //redirect to whatever page
 	                _this.props.router.push('waiting/');
 	            });
@@ -27292,7 +27296,7 @@
 	                            ),
 	                            _react2.default.createElement(_PlayerNameInput2.default, _extends({
 	                                handlePlayerNameInput: this.handlePlayerNameInput,
-	                                loginUser: this.loginUser
+	                                loginUser: this.loginOrganizer
 	                            }, this.state))
 	                        );
 	                    }
@@ -27306,7 +27310,7 @@
 	                            }, this.state)),
 	                            _react2.default.createElement(_PlayerNameInput2.default, _extends({
 	                                handlePlayerNameInput: this.handlePlayerNameInput,
-	                                loginUser: this.loginUser
+	                                loginUser: this.loginJoiner
 	                            }, this.state))
 	                        );
 	                    }
