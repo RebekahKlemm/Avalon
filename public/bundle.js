@@ -27228,7 +27228,9 @@
 	            _this.setState({ roomKey: e.target.value });
 	        }, _this.loginUser = function (e) {
 	            e.preventDefault();
-	            Promise.all([_this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName), _this.props.addUserToGame(_this.state.roomKey, _this.state.currentPlayerId)]).then(function () {
+	            Promise.all([_this.props.updateUserName(_this.state.currentPlayerId, _this.state.userName),
+	            // Refactor to only make this call if role !== 'organizer' (organizer automatically added to game in app.js)
+	            _this.props.addUserToGame(_this.state.roomKey, _this.state.currentPlayerId)]).then(function () {
 	                //redirect to whatever page
 	                _this.props.router.push('waiting/');
 	            });
@@ -27256,7 +27258,7 @@
 	                    });
 	                });
 	            } else {
-	                (0, _api.joinAGame)(this.state.roomKey, function (err, player) {
+	                (0, _api.joinAGame)(function (err, player) {
 	                    return _this2.setState({
 	                        currentPlayer: player,
 	                        currentPlayerId: player.id
@@ -31280,11 +31282,11 @@
 	
 	var socket = (0, _socket2.default)('http://localhost:3008');
 	
-	function joinAGame(roomKey, cb) {
+	function joinAGame(cb) {
 	    socket.on('assignPlayer', function (player) {
 	        return cb(null, player);
 	    });
-	    socket.emit('join_a_game', roomKey);
+	    socket.emit('join_a_game');
 	}
 	
 	function startAGame(cb) {

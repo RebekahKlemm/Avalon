@@ -55,7 +55,7 @@ io.on('connection', function(client){
                 return newPlayer;
             })
             .then(function(newPlayer){
-                client.emit('roomKey', game.dataValues.roomKey, newPlayer);
+                client.emit('roomKey', game.roomKey, newPlayer);
             })
     });
 
