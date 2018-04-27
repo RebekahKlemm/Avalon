@@ -1,5 +1,4 @@
 // currently used
-export const LOGIN = 'LOGIN';
 export const REGISTER_PLAYER = 'REGISTER_PLAYER';
 
 // for reference

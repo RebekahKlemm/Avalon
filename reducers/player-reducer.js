@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     // currently used
-    LOGIN, REGISTER_PLAYER,
+    REGISTER_PLAYER,
     // for reference
     UPDATEUSERLOGINSTATUS, ADD_USER, RECEIVE_USERS, UPDATE_CURRENT_USER, UPDATE_USER, EDIT_USER, REFRESH_USERS, DELETE_USER
 } from '../actions/constants';
@@ -15,11 +15,6 @@ const initialState = {
 export default function (state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
-        case LOGIN:
-            newState.currentPlayer=Object.assign({}, {name: action.userName});
-            newState.allPlayers.push(newState.currentPlayer);
-            break;
-
         case REGISTER_PLAYER:
             newState.currentPlayer=Object.assign({}, {player : action.player});
             newState.allPlayers.push(action.player);

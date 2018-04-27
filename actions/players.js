@@ -1,12 +1,5 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS, REFRESH_USERS, UPDATEUSERLOGINSTATUS, LOGIN, REGISTER_PLAYER} from './constants';
-
-export const login = function(userName){
-    return{
-        type: LOGIN,
-        userName: userName
-    }
-};
+import {ADD_USER, RECEIVE_USERS, REFRESH_USERS, UPDATEUSERLOGINSTATUS, REGISTER_PLAYER} from './constants';
 
 export const registerPlayer = function(player){
     return{
@@ -15,6 +8,7 @@ export const registerPlayer = function(player){
     }
 };
 
+// send name and roomKey
 export function registerJoiner(playerId, playerName, roomKey) {
     return function (dispatch) {
         return axios.put('/api/players/' + playerId, {name: playerName, roomKey: roomKey})
@@ -25,14 +19,13 @@ export function registerJoiner(playerId, playerName, roomKey) {
     }
 }
 
-//asynch action creator (thunk)
-export function updateUserName(playerId, userName){
-    return function (dispatch){
-        return axios.put('/api/players/' + playerId, {name: userName})
+// send only the name, roomKey is already on the player
+export function registerOrganizer(playerId, playerName) {
+    return function (dispatch) {
+        return axios.put('/api/players/' + playerId, {name: playerName})
             .then(response => response.data)
-            .then(function(newUser){
-                // update on front end
-                dispatch(login(newUser.name))
+            .then((newPlayer) => {
+                dispatch(registerPlayer(newPlayer));
             })
     }
 }
