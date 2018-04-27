@@ -39,8 +39,10 @@ router.put('/:id', function(req, res, next){
             if (req.body.roomKey) {
                return Game.findOne({where:{roomKey:req.body.roomKey}})
                    .then(function(game){
-                       game.addPlayer(player);
-                       return player;
+                       return game.addPlayer(player)
+                           .then(function () {
+                               return Player.findById(player.id);
+                           })
                    })
             } else {
                 return player;
