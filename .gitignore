@@ -5,3 +5,5 @@ package-lock.json
 .idea/
 
 public/bundle.js
+
+public/bundle.js.map
