@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:3008');
+let socket = openSocket('192.168.33.104:3008');
 
 function joinAGame(cb) {
     socket.on('assignPlayer', player => cb(null, player));
@@ -11,4 +11,10 @@ function startAGame(cb) {
     socket.emit('start_a_game');
 }
 
-export { joinAGame, startAGame }
+function listenForNewPlayers(cb) {
+    socket.on('player_joined_the_room', () => {
+        return cb();
+    });
+}
+
+export { joinAGame, startAGame, listenForNewPlayers }

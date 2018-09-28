@@ -1,10 +1,17 @@
 import axios from 'axios';
-import {ADD_USER, RECEIVE_USERS, REFRESH_USERS, UPDATEUSERLOGINSTATUS, REGISTER_PLAYER} from './constants';
+import {ADD_USER, RECEIVE_USERS, REFRESH_USERS, UPDATEUSERLOGINSTATUS, REGISTER_PLAYER, UPDATE_ALL_PLAYERS} from './constants';
 
 export const registerPlayer = function(player){
     return{
         type: REGISTER_PLAYER,
         player : player
+    }
+};
+
+export const updateAllPlayers = function(players) {
+    return{
+        type: UPDATE_ALL_PLAYERS,
+        players: players
     }
 };
 
@@ -30,7 +37,21 @@ export function registerOrganizer(playerId, playerName) {
     }
 }
 
-
+// get all players in the game
+export function updatePlayers(gameID) {
+  return function (dispatch) {
+    return axios.get('/api/games/' + gameID +'/players/')
+      .then(response => {
+          return response.data;
+      })
+      .then(allPlayers => {
+          dispatch(updateAllPlayers(allPlayers));
+      })
+      .catch(err => {
+          console.log('err', err);
+      })
+  }
+}
 
 /////////////////////////FOR REFERENCE/////////////
 

@@ -67,6 +67,9 @@ io.on('connection', function(client){
             });
     });
 
+    client.on('new_player_joined',() => {
+      client.broadcast.emit('player_joined_the_room');
+    });
 
     //Whenever someone disconnects this piece of code executed
     client.on('disconnect', function () {

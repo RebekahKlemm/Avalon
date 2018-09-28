@@ -2,12 +2,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Store Functions
-import {registerOrganizer, registerJoiner } from '../../actions/players';
+import { registerOrganizer, registerJoiner } from '../../actions/players';
 // Components
 import RoomKeyInput from '../RoomKeyInput';
 import PlayerNameInput from '../PlayerNameInput';
 
 import { joinAGame, startAGame } from '../api';
+
+import openSocket from 'socket.io-client';
+let socket = openSocket('192.168.33.104:3008');
 
 class LoginContainer extends Component{
 
@@ -61,6 +64,7 @@ class LoginContainer extends Component{
         e.preventDefault();
         this.props.registerJoiner(this.state.currentPlayerId, this.state.userName, this.state.roomKey)
             .then(() => {
+                socket.emit('new_player_joined');
                 //redirect to whatever page
                 this.props.router.push('waiting/');
             });

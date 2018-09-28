@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { listenForNewPlayers } from '../api';
+// Store Functions
+import { updatePlayers } from '../../actions/players';
 
 class Waiting extends Component{
     constructor(props){
@@ -13,6 +15,15 @@ class Waiting extends Component{
 
     }
 
+  componentDidMount() {
+      // get all current players and put them in the store
+    this.props.updatePlayers(this.props.currentPlayer.player.gameId);
+
+    // subscribe to updates for new players that join the same room
+    listenForNewPlayers(() => {
+      this.props.updatePlayers(this.props.currentPlayer.player.gameId);
+    })
+  }
 
     render(){
 
@@ -28,20 +39,10 @@ class Waiting extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        // allUsers: state.users.allUsers
+        currentPlayer: state.players.currentPlayer
     };
 }
 
-
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        // setSession: function(user){
-        //     dispatch(setSession(user));
-        // }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Waiting);
+export default connect(mapStateToProps, { updatePlayers })(Waiting);
 
 

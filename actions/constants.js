@@ -1,5 +1,6 @@
 // currently used
 export const REGISTER_PLAYER = 'REGISTER_PLAYER';
+export const UPDATE_ALL_PLAYERS = 'UPDATE_ALL_PLAYERS';
 
 // for reference
 export const ADD_USER = 'ADD_USER';
