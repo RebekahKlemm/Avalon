@@ -2,15 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // Store Functions
-import { registerOrganizer, registerJoiner } from '../../actions/players';
+import { registerPlayer, registerJoiner } from '../../actions/players';
 // Components
 import RoomKeyInput from '../RoomKeyInput';
 import PlayerNameInput from '../PlayerNameInput';
-
-import { joinAGame, startAGame } from '../api';
-
-import openSocket from 'socket.io-client';
-let socket = openSocket('192.168.33.104:3008');
+// Socket Events
+import { joinAGame, startAGame, newPlayerJoined, registerOrganizer } from '../api';
 
 class LoginContainer extends Component{
 
@@ -53,18 +50,19 @@ class LoginContainer extends Component{
 
     loginOrganizer = (e) => {
         e.preventDefault();
-        this.props.registerOrganizer(this.state.currentPlayerId, this.state.userName)
-            .then(() => {
-                //redirect to whatever page
-                this.props.router.push('waiting/');
-            });
+        registerOrganizer(this.state.currentPlayerId, this.state.userName, (err, updatedPlayer) => {
+            // dispatch registerPlayer
+          this.props.registerPlayer(updatedPlayer);
+          //redirect to whatever page
+          this.props.router.push('waiting/');
+        });
     };
 
     loginJoiner = (e) => {
         e.preventDefault();
         this.props.registerJoiner(this.state.currentPlayerId, this.state.userName, this.state.roomKey)
             .then(() => {
-                socket.emit('new_player_joined');
+              newPlayerJoined();
                 //redirect to whatever page
                 this.props.router.push('waiting/');
             });
@@ -114,6 +112,6 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps, { registerOrganizer, registerJoiner })(LoginContainer);
+export default connect(mapStateToProps, { registerJoiner, registerPlayer })(LoginContainer);
 
 

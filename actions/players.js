@@ -26,17 +26,6 @@ export function registerJoiner(playerId, playerName, roomKey) {
     }
 }
 
-// send only the name, roomKey is already on the player
-export function registerOrganizer(playerId, playerName) {
-    return function (dispatch) {
-        return axios.put('/api/players/' + playerId, {name: playerName})
-            .then(response => response.data)
-            .then((newPlayer) => {
-                dispatch(registerPlayer(newPlayer));
-            })
-    }
-}
-
 // get all players in the game
 export function updatePlayers(gameID) {
   return function (dispatch) {

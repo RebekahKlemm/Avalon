@@ -71,6 +71,16 @@ io.on('connection', function(client){
       client.broadcast.emit('player_joined_the_room');
     });
 
+    client.on('register_organizer', (playerId, playerName) => {
+    Player.findById(playerId)
+      .then((player) => {
+        return player.update({name: playerName});
+      })
+      .then((updatedPlayer) => {
+        client.emit('organizer_updated', updatedPlayer);
+      });
+  });
+
     //Whenever someone disconnects this piece of code executed
     client.on('disconnect', function () {
         console.log('A user disconnected');

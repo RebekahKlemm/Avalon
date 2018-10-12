@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-let socket = openSocket('192.168.33.104:3008');
+const socket = openSocket('192.168.33.104:3008');
 
 function joinAGame(cb) {
     socket.on('assignPlayer', player => cb(null, player));
@@ -17,4 +17,15 @@ function listenForNewPlayers(cb) {
     });
 }
 
-export { joinAGame, startAGame, listenForNewPlayers }
+function newPlayerJoined() {
+    socket.emit('newPlayerJoined');
+}
+
+function registerOrganizer(playerId, playerName, cb) {
+  socket.on('organizer_updated', updatedPlayer => {
+      cb(null, updatedPlayer);
+  });
+  socket.emit('register_organizer', playerId, playerName);
+}
+
+export { joinAGame, startAGame, listenForNewPlayers, newPlayerJoined, registerOrganizer }
